@@ -1,2 +1,4 @@
 .env
 nlp.py
+node_modules
+only_feature.js
