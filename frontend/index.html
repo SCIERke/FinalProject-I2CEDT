@@ -1,21 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Temporary Frontend</title>
-    <!-- Link to external CSS -->
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Essay Checker</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar" aria-label="Essay history">
+        <h2>History</h2>
+        <ul id="history-list"></ul>
+    </aside>
+    <button class="menu-btn" aria-label="Toggle sidebar" onclick="toggleSidebar()">☰</button>
 
-    <main>
-        <p>This is a temporary index.html page to test your Docker setup.</p>
-        <button id="testBtn">Click me</button>
+    <!-- Main -->
+    <main class="container">
+        <div class="top-box">
+            <input id="essay-title" type="text" placeholder="ใส่หัวข้อ Essay..." />
+            <button class="btn" id="rand-btn" onclick="randomTopic()">Random หัวข้อ</button>
+        </div>
+
+        <textarea id="essay-input" placeholder="พิมพ์ Essay ของคุณที่นี่..."></textarea>
+        <button class="btn" id="submit-btn" onclick="submitEssay()">Submit</button>
     </main>
 
+    <!-- Result -->
+    <section id="result" class="result-section" aria-live="polite">
+        <h2>Essay Score (เต็ม 10)</h2>
+        <p>Part 1: <span id="part1">-</span></p>
+        <p>Part 2: <span id="part2">-</span></p>
+        <p>Part 3: <span id="part3">-</span></p>
+        <p>Part 4: <span id="part4">-</span></p>
+        <p>Part 5: <span id="part5">-</span></p>
+        <h3>Feedback</h3>
+        <div>test</div>
+        <p id="feedback">Your essay feedback will appear here...</p>
+    </section>
+
+    <script src="final.js"></script>
 </body>
 
 </html>
