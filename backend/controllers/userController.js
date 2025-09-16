@@ -44,3 +44,17 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+export const getAllUsernames = async (req, res) => {
+  try {
+    // Only return the username field, not password
+    const users = await User.find({}, "auth.username");
+
+    // Map results into an array of just usernames
+    const usernames = users.map(user => user.auth.username);
+
+    res.status(200).json({ usernames });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};

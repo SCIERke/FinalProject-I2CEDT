@@ -27,6 +27,7 @@ app.use("/api/topics", topicRoutes);
 app.use("/api/submissions", submissionRoutes);
 app.use("/api/users", userRoutes);
 
+
 // Serve frontend static files
 // const __filename = fileURLToPath(
 //     import.meta.url);
