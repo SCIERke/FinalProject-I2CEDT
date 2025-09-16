@@ -7,6 +7,7 @@ import helmet from "helmet";
 import connectDB from "./config/db.js";
 import topicRoutes from "./routes/topicRoutes.js";
 import submissionRoutes from "./routes/submissionRoutes.js";
+import userRoutes from "./routes/userRoutes.js"; 
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ await connectDB(MONGO_URI);
 // API routes
 app.use("/api/topics", topicRoutes);
 app.use("/api/submissions", submissionRoutes);
+app.use("/api/users", userRoutes);
 
 // Serve frontend static files
 const __filename = fileURLToPath(import.meta.url);

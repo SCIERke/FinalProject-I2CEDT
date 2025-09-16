@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const submissionSchema = new mongoose.Schema(
   {
+    auth: {username: String },
     topic: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Topic",
