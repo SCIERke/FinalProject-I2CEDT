@@ -1,24 +1,24 @@
 services:
-  frontend:
-    image: nginx:alpine
-    container_name: frontend
-    restart: unless-stopped
-    volumes:
-      - ./frontend:/usr/share/nginx/html:ro
-    ports:
-      - "8080:80"
-    depends_on:
-      - backend
-      # - python # uncomment me when link with python
+  # frontend:
+  #   image: nginx:alpine
+  #   container_name: frontend
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./frontend:/usr/share/nginx/html:ro
+  #   ports:
+  #     - "8080:80"
+  #   depends_on:
+  #     - backend
+  #     # - python # uncomment me when link with python
 
-  backend:
-    build: ./backend
-    container_name: backend
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./backend:/usr/src/app
+  # backend:
+  #   build: ./backend
+  #   container_name: backend
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./backend:/usr/src/app
 
   # python:
   #   image: # put your python image here
@@ -26,31 +26,25 @@ services:
   #   container_name: ocr
   #   volumes:
   #     - # volume if need?
-
-  db:
-    image: postgres:latest
-    container_name: postgres_db
+  mongo:
+    image: mongo
     restart: unless-stopped
-    environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: mydatabase
     ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
 
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    restart: unless-stopped
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+  mongo-express:
+    image: mongo-express
+    restart: always
     ports:
-      - "5050:80"
-    depends_on:
-      - db
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_BASICAUTH_ENABLED: true
+      ME_CONFIG_BASICAUTH_USERNAME: mongoexpressuser
+      ME_CONFIG_BASICAUTH_PASSWORD: mongoexpresspass
 
 volumes:
   pgdata:
