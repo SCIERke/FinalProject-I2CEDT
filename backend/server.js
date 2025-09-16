@@ -17,7 +17,7 @@ app.use(express.json({ limit: "1mb" }));
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI =
-  process.env.MONGO_URI || "mongodb://127.0.0.1:27017/essay_checker";
+    process.env.MONGO_URI || "mongodb://127.0.0.1:27017/essay_checker";
 
 await connectDB(MONGO_URI);
 
@@ -26,25 +26,26 @@ app.use("/api/topics", topicRoutes);
 app.use("/api/submissions", submissionRoutes);
 
 // Serve frontend static files
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(
+//     import.meta.url);
+// const __dirname = path.dirname(__filename);
 
-// Serve frontend static
-const frontendPath = path.join(__dirname, "..", "frontend");
-app.use(express.static(frontendPath));
-// SPA fallback
-app.get("*", (req, res) => {
-  res.sendFile(path.join(frontendPath, "index.html"));
-});
+// // // Serve frontend static
+// // const frontendPath = path.join(__dirname, "..", "frontend");
+// // app.use(express.static(frontendPath));
+// // // SPA fallback
+// // app.get("*", (req, res) => {
+// //     res.sendFile(path.join(frontendPath, "index.html"));
+// // });
 
 // Error handler
 app.use((err, req, res, next) => {
-  console.error(err);
-  const status =
-    res.statusCode && res.statusCode !== 200 ? res.statusCode : 500;
-  res.status(status).json({ message: err.message || "Server error" });
+    console.error(err);
+    const status =
+        res.statusCode && res.statusCode !== 200 ? res.statusCode : 500;
+    res.status(status).json({ message: err.message || "Server error" });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
