@@ -19,4 +19,4 @@ ENV PORT=4000
 EXPOSE 4000
 
 # คำสั่งเริ่มรัน
-CMD ["npm", "run" , "dev"]
+CMD ["npm" , "run","dev"]
