@@ -3,6 +3,7 @@ import User from "../models/User.js";
 // REGISTER new user
 export const registerUser = async (req, res) => {
   try {
+    console.log("Incoming register body:", req.body);
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -10,16 +11,19 @@ export const registerUser = async (req, res) => {
     }
 
     const existingUser = await User.findOne({ "auth.username": username });
+    console.log("Existing user check:", existingUser); 
     if (existingUser) {
       return res.status(400).json({ message: "Username already taken" });
     }
 
     const newUser = new User({ auth: { username, password } });
     await newUser.save();
+    console.log("Saved user:", newUser);
+
 
     return res.status(201).json({ message: "User registered successfully", user: newUser });
   } catch (error) {
-    console.error(error);
+    console.error("Register error:", error);
     res.status(500).json({ message: "Server error" });
   }
 };

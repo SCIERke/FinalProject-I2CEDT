@@ -13,7 +13,8 @@ dotenv.config();
 
 const app = express();
 app.use(helmet());
-app.use(cors());
+// app.use(cors()); // uncomment here
+app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json({ limit: "1mb" }));
 
 const PORT = process.env.PORT || 5000;

@@ -44,7 +44,8 @@ function setTitlePreview(text) {
 // ----- Random Topic (backend only) -----
 async function randomTopic() {
   try {
-    const res = await fetch("/api/topics/random");
+    // const res = await fetch("/api/topics/random"); // uncomment here
+    const res = await fetch("http://localhost:5000/api/topics/random");
     const j = await res.json();
     if (!j.topic) {
       alert("No unused topics left. You can reset seed or allow reuse.");
@@ -137,7 +138,7 @@ async function submitEssay() {
     } else if (topicId) {
       payload.topicId = topicId;
     }
-    const res = await fetch("/api/submissions", {
+    const res = await fetch("http://localhost:5000/api/submissions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -234,7 +235,7 @@ historyList.addEventListener("click", (e) => {
     const newTitle = editBox.querySelector(".edit-input").value.trim();
     if (!newTitle) return alert("กรอกชื่อหัวข้อให้ถูกต้อง");
     const id = li.dataset.id;
-    fetch(`/api/submissions/${id}/topic`, {
+    fetch(`http://localhost:5000/api/submissions/${id}/topic`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ newTopic: newTitle }),
@@ -263,7 +264,7 @@ historyList.addEventListener("click", (e) => {
       const id = li.dataset.id;
       if (!id) return;
       try {
-        const res = await fetch(`/api/submissions/${id}`, { method: "DELETE" });
+        const res = await fetch(`http://localhost:5000/api/submissions/${id}`, { method: "DELETE" });
         const j = await res.json().catch(() => ({}));
         if (res.status !== 200) throw new Error(j.message || "Delete failed");
         li.remove();
@@ -309,7 +310,7 @@ function openHistorySnapshot(li) {
 // ----- Load history from backend -----
 async function loadHistory() {
   try {
-    const res = await fetch("/api/submissions/history");
+    const res = await fetch("http://localhost:5000/api/submissions/history");
     const j = await res.json();
     historyList.innerHTML = "";
     if (!j.submissions || !j.submissions.length) {
