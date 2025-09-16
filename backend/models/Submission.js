@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const submissionSchema = new mongoose.Schema({
-    auth: { username: String },
     topic: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Topic",
@@ -9,27 +8,26 @@ const submissionSchema = new mongoose.Schema({
     },
     essay: { type: String, required: true },
     result: {
-        criteria: {
+        scores: {
             taskResponse: {
                 score: Number,
                 feedback: String,
             },
-            coherence: {
+            coherenceCohesion: {
                 score: Number,
                 feedback: String,
             },
-            lexical: {
+            lexicalResource: {
                 score: Number,
                 feedback: String,
             },
-            grammar: {
+            grammaticalRange: {
                 score: Number,
                 feedback: String,
             },
+            overall: Number,
+            feedback: String, // overall feedback
         },
-        overallBand: Number,
-        feedback: String, // overall feedback
-        raw: mongoose.Schema.Types.Mixed, // raw response from evaluator
     },
 }, { timestamps: true });
 
