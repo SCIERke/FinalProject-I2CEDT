@@ -1,21 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Temporary Frontend</title>
-    <!-- Link to external CSS -->
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Essay Checker</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar" aria-label="Essay history">
+    <h2>History</h2>
+    <ul id="history-list"></ul>
+  </aside>
+  <button class="menu-btn" aria-label="Toggle sidebar" >☰</button>
 
-    <main>
-        <p>This is a temporary index.html page to test your Docker setup.</p>
-        <button id="testBtn">Click me</button>
-    </main>
+  <!-- Main -->
+  <main class="container">
+    <div class="top-box">
+      <div id="title-preview" class="title-preview" aria-live="polite"></div>
+      <textarea id="essay-title" rows="2" placeholder="ใส่หัวข้อ Essay..."></textarea>
+      <button class="btn" id="rand-btn" >Random หัวข้อ</button>
+    </div>
 
+
+    <textarea id="essay-input" placeholder="พิมพ์ Essay ของคุณที่นี่..."></textarea>
+    <button class="btn" id="submit-btn">Submit</button>
+  </main>
+
+  <!-- Result -->
+<section id="result" class="result-section" aria-live="polite">
+  <h2>Essay Score (เต็ม 10)</h2>
+
+  <p><strong>Task response:</strong> <span id="part1">-</span></p>
+  <p class="part-feedback" id="part1-fb"><strong>Reasoning:</strong> </p>
+
+  <p><strong>Coherence and Cohesion:</strong> <span id="part2">-</span></p>
+  <p class="part-feedback" id="part2-fb"><strong>Reasoning:</strong> </p>
+
+  <p><strong>Grammatical Range:</strong> <span id="part3">-</span></p>
+  <p class="part-feedback" id="part3-fb"><strong>Reasoning:</strong> </p>
+
+  <p><strong>LexicalResource:</strong> <span id="part4">-</span></p>
+  <p class="part-feedback" id="part4-fb"><strong>Reasoning:</strong> </p>
+
+  <p><strong>Overall:</strong> <span id="part5">-</span></p>
+  <p class="part-feedback" id="part5-fb"><strong>Feedback:</strong> </p>
+</section>
+
+</section>
+
+  <script src="script.js"></script>
 </body>
-
 </html>
