@@ -70,9 +70,7 @@ function setResultVisibility(visible) {
 // ปรับปรุง: แสดง feedback แยกหัวข้อ
 function updateResultFromResultObj(result) {
     if (!result) return setResultVisibility(false);
-    console.log("result", result)
     const crit = result.scores || {};
-    console.log("crit", crit)
     const scores = [
         crit ? crit.taskResponse.score : "-",
         crit ? crit.coherenceCohesion.score : "-",
@@ -121,10 +119,6 @@ async function submitEssay() {
     const text = (textEl.value || "").trim();
     const topicId = titleEl.dataset.topicId || null;
 
-    console.log("title:", title);
-    console.log("text:", text);
-
-
     if (!title || !text) {
         alert("กรอกหัวข้อและเนื้อหาให้ครบก่อนนะ");
         return;
@@ -137,13 +131,13 @@ async function submitEssay() {
 
         const payload = topicId ? { topicId, essay: text } : { topic: title, essay: text };
 
-
+        payload.user = localStorage.getItem("username")
         if (activeSubmissionId) {
             payload.submissionId = activeSubmissionId;
-        } else if (topicId) {
+        } else
+        if (topicId) {
             payload.topicId = topicId;
         }
-        console.log("payload:", payload);
         const res = await fetch("/api/submissions", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -156,7 +150,6 @@ async function submitEssay() {
         const response = await res.json();
         updateResultFromResultObj(response.submission.result);
 
-        console.log("response.submission.result", response.submission.result);
 
         addToHistoryItem({
             id: response.submission.id,
@@ -191,7 +184,6 @@ function createHistoryElement(item) {
     li.dataset.title = item.topic || "";
     li.dataset.text = item.essay || "";
 
-    console.log("item", item);
     li.dataset.result = JSON.stringify(item.result || {});
     li.innerHTML = `
     <span class="title">${escapeHtml(item.topic)}</span>
@@ -288,7 +280,6 @@ historyList.addEventListener("click", (e) => {
         closeAllMenus();
         return;
     }
-    console.log(li);
     openHistorySnapshot(li);
     closeAllMenus();
 });
@@ -320,7 +311,12 @@ function openHistorySnapshot(li) {
 // ----- Load history from backend -----
 async function loadHistory() {
     try {
-        const res = await fetch("/api/submissions/history");
+        const username = localStorage.getItem("username");
+        console.log(username)
+
+        const res = await fetch(`/api/submissions/history?username=${encodeURIComponent(username)} `, {
+            method: "GET", // ต้องระบุ method
+        });
         const j = await res.json();
         historyList.innerHTML = "";
         if (!j.submissions || !j.submissions.length) {
