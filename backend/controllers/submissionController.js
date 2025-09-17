@@ -4,7 +4,7 @@ import Topic from "../models/Topic.js";
 import evaluateEssay from "../utils/evaluator.js";
 
 export const submitEssay = asyncHandler(async(req, res) => {
-    const { topicId, topic, essay, submissionId } = req.body;
+    const { topicId, topic, essay, submissionId, user } = req.body;
 
     // basic validation: either topicId or topic text must exist
     let topicDoc = null;
@@ -44,11 +44,12 @@ export const submitEssay = asyncHandler(async(req, res) => {
         }
     } else {
         // --- CREATE LOGIC (ของเดิม) ---
-        console.log("create doc logic", result)
+        console.log(user)
         const newSubmission = await Submission.create({
             topic: topicDoc._id,
             essay,
             result: result,
+            user
         });
         savedSubmission = await newSubmission.populate("topic");
     }
@@ -79,7 +80,12 @@ export const submitEssay = asyncHandler(async(req, res) => {
 });
 
 export const getHistory = asyncHandler(async(req, res) => {
-    const subs = await Submission.find()
+    // const { username } = req.query.username;
+    const username = req.query.username;
+    if (!username) {
+        return res.status(400).json({ message: "User is required" });
+    }
+    const subs = await Submission.find({ user: username })
         .populate("topic")
         .sort({ createdAt: -1 })
         .limit(100)

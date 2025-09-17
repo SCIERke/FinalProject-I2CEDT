@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const submissionSchema = new mongoose.Schema({
+    user: { type: String, required: true },
     topic: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Topic",
